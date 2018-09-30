@@ -5,7 +5,9 @@ Easy way to use traceroute on Android.
 
 Traceroute tracks the route packets taken from an IP network on their way to a given host. It utilizes the IP protocol's time to live (TTL) field and attempts to elicit an ICMP TIME_EXCEEDED response from each gateway along the path to the host.
 
-![images/1.png]
+## Rendering Image
+
+![images/1.png](images/1.png)
 
 ## Adding to project
 
