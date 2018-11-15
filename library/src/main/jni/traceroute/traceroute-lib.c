@@ -118,6 +118,8 @@ void perror(const char *msg) {
 }
 
 void exit(int status) {
+    // avoid some device crash. eg: vivo x7
+    (*g_jvm)->DetachCurrentThread(g_jvm);
     exec_status = -3;
     LOGE("traceroute error to exit program, status:%d", status);
     pthread_exit(0);

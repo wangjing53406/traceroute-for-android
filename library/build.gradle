@@ -71,7 +71,7 @@ publish {
     userOrg = 'angelwangjing'
     groupId = 'com.wandroid'
     artifactId = 'traceroute-for-android'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.1'
     desc = 'traceroute with jni on android'
     website = 'https://github.com/wangjing53406/traceroute-for-android'
 }
