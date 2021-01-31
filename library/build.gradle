@@ -14,10 +14,8 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
-            // >= ndk17 unsupport armeabi
-            abiFilters /*'armeabi',*/ 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         }
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -31,13 +29,6 @@ android {
             path 'src/main/jni/Android.mk'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 
 }
 
@@ -46,7 +37,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 task generateSourcesJar(type: Jar) {
@@ -80,7 +71,7 @@ publish {
     userOrg = 'angelwangjing'
     groupId = 'com.wandroid'
     artifactId = 'traceroute-for-android'
-    publishVersion = '1.0.2'
+    publishVersion = '1.0.1'
     desc = 'traceroute with jni on android'
     website = 'https://github.com/wangjing53406/traceroute-for-android'
 }

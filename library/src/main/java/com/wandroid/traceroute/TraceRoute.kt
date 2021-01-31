@@ -10,21 +10,6 @@ import android.os.Looper
  */
 object TraceRoute {
 
-    /**
-     * trace route success code
-     */
-    const val SUCCESS = 0
-
-    /**
-     * trace route failed code
-     */
-    const val FAILED = -1
-
-    /**
-     * trace route failed code, native error happened
-     */
-    const val NATIVE_ERROR = -3
-
     init {
         System.loadLibrary("traceroute")
     }
@@ -93,6 +78,7 @@ object TraceRoute {
      * @param async synchronous or asynchronous execution
      * @return TraceRouteResult
      */
+    @Synchronized
     fun traceRoute(hostname: String, async: Boolean = false): TraceRouteResult? {
         val args = arrayOf("traceroute", hostname)
         if (async) {
@@ -114,20 +100,15 @@ object TraceRoute {
     @Synchronized
     fun traceRoute(args: Array<String>): TraceRouteResult {
         val traceRouteResult = TraceRouteResult.instance()
-        try {
-            traceRouteResult.code = execute(args)
-            if (traceRouteResult.code == SUCCESS) {
-                traceRouteResult.message = result.toString()
-                handler.post { callback?.onSuccess(traceRouteResult) }
-            } else {
-                traceRouteResult.message = "execute traceroute failed."
-                handler.post {
-                    callback?.onFailed(traceRouteResult.code, traceRouteResult.message)
-                }
+        traceRouteResult.code = execute(args)
+        if (traceRouteResult.code == 0) {
+            traceRouteResult.message = result.toString()
+            handler.post { callback?.onSuccess(traceRouteResult) }
+        } else {
+            traceRouteResult.message = "execute traceroute failed."
+            handler.post {
+                callback?.onFailed(traceRouteResult.code, traceRouteResult.message)
             }
-        } catch (e: Exception) {
-            traceRouteResult.code = FAILED
-            traceRouteResult.message = "traceroute failed. reason: ${e.message}"
         }
         return traceRouteResult
     }
@@ -149,7 +130,7 @@ data class TraceRouteResult(var code: Int, var message: String) {
 
     companion object {
 
-        fun instance(): TraceRouteResult = TraceRouteResult(TraceRoute.FAILED, "")
+        fun instance(): TraceRouteResult = TraceRouteResult(-1, "")
 
     }
 
