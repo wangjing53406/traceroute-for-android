@@ -44,9 +44,11 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        })
         TraceRoute.setCallback {
-            success { result.append("\ntraceroute finish") }
+            success {
+                result.append("\ntraceroute finish.")
+            }
             update { text -> result.append(text) }
-            failed { code, reason -> result.append("""\ntraceroute failed.code:$code, reason:$reason""") }
+            failed { code, reason -> result.append("\ntraceroute failed.code:$code, reason:$reason") }
         }
         TraceRoute.traceRoute(text.text.toString(), true)
     }

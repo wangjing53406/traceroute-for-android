@@ -47,3 +47,7 @@ TraceRoute.traceRoute("www.google.com", true)
 ```
 
 get executable file from [traceroute-android-executable](https://github.com/wangjing53406/traceroute-android-executable)
+
+## License
+
+This project is licensed under the terms of the Apache License 2.0 license.
